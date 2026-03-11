@@ -1,0 +1,94 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>数据确认 - AI 会计师</title>
+  <link rel="stylesheet" href="css/ai-accountant.css">
+</head>
+<body>
+  <!-- 顶部导航栏 -->
+  <div class="header">
+    <div class="header-nav">
+      <button class="header-btn" onclick="goBack()">←</button>
+      <div class="header-title">数据确认</div>
+      <div style="width: 24px;"></div>
+    </div>
+  </div>
+  
+  <!-- 成功提示 -->
+  <div class="success-card">
+    <div class="success-icon">✅</div>
+    <div class="success-title">解析成功！</div>
+  </div>
+  
+  <!-- 数据概览 -->
+  <div class="stats-card">
+    <div class="stats-header">
+      <span class="stats-icon">📊</span>
+      <span class="stats-title">数据概览</span>
+    </div>
+    
+    <div class="stats-grid">
+      <div class="stat-item">
+        <div class="stat-value">156</div>
+        <div class="stat-label">订单总数</div>
+      </div>
+      <div class="stat-item">
+        <div class="stat-value">320</div>
+        <div class="stat-label">商品总数</div>
+      </div>
+      <div class="stat-item">
+        <div class="stat-value">¥12,456</div>
+        <div class="stat-label">订单金额</div>
+      </div>
+      <div class="stat-item">
+        <div class="stat-value">¥4,222</div>
+        <div class="stat-label">待确认收入</div>
+      </div>
+    </div>
+  </div>
+  
+  <!-- 警告提示 -->
+  <div class="warning-card">
+    <div class="warning-title">发现 3 条数据异常</div>
+    <ul class="warning-list">
+      <li>订单号 12345 金额为 0</li>
+      <li>订单号 67890 无商品信息</li>
+      <li>订单号 11111 重复导入</li>
+    </ul>
+    <div class="warning-actions">
+      <button class="warning-btn warning-btn-view" onclick="viewDetails()">查看详情</button>
+      <button class="warning-btn warning-btn-ignore" onclick="ignoreWarnings()">忽略继续</button>
+    </div>
+  </div>
+  
+  <!-- 底部按钮组 -->
+  <div style="padding: var(--spacing-md);">
+    <div class="bottom-actions">
+      <button class="action-btn action-btn-secondary" onclick="goBack()">取消</button>
+      <button class="action-btn action-btn-primary" onclick="confirmImport()">确认导入</button>
+    </div>
+  </div>
+  
+  <script>
+    function goBack() {
+      window.location.href = 'index.html';
+    }
+    
+    function viewDetails() {
+      alert('异常详情：\n\n1. 订单号 12345 - 金额为 0，建议删除\n2. 订单号 67890 - 无商品信息，需补充\n3. 订单号 11111 - 重复导入，已存在');
+    }
+    
+    function ignoreWarnings() {
+      confirmImport();
+    }
+    
+    function confirmImport() {
+      // 模拟导入
+      alert('导入成功！\n\n导入订单：156 单\n生成收入：¥4,222.00\n待处理：3 单');
+      window.location.href = 'success.html';
+    }
+  </script>
+</body>
+</html>

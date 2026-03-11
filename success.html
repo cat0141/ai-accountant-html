@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>导入成功 - AI 会计师</title>
+  <link rel="stylesheet" href="css/ai-accountant.css">
+</head>
+<body>
+  <!-- 顶部导航栏 -->
+  <div class="header">
+    <div class="header-title" style="padding: var(--spacing-md); text-align: center;">订单导入</div>
+  </div>
+  
+  <!-- 成功卡片 -->
+  <div class="success-card">
+    <div class="success-icon">✅</div>
+    <div class="success-title">导入成功！</div>
+    
+    <div class="success-info">
+      <div class="success-item">
+        <span>导入时间</span>
+        <span>2026-03-11 22:30</span>
+      </div>
+      <div class="success-item">
+        <span>导入订单</span>
+        <span>156 单</span>
+      </div>
+      <div class="success-item">
+        <span>生成收入</span>
+        <span style="color: var(--primary-purple); font-weight: bold;">¥4,222.00</span>
+      </div>
+      <div class="success-item">
+        <span>待处理</span>
+        <span style="color: var(--warning-orange);">3 单</span>
+      </div>
+    </div>
+    
+    <div class="success-tips">
+      <div class="success-tips-title">💡 接下来您可以：</div>
+      <ul class="success-tips-list">
+        <li>生成无票收入</li>
+        <li>关联发票</li>
+        <li>导出报表</li>
+      </ul>
+    </div>
+    
+    <div class="bottom-actions">
+      <button class="action-btn action-btn-primary" onclick="viewOrders()">查看订单列表</button>
+    </div>
+    <div class="bottom-actions">
+      <button class="action-btn action-btn-secondary" onclick="goHome()">返回首页</button>
+    </div>
+  </div>
+  
+  <script>
+    function viewOrders() {
+      window.location.href = 'orders.html';
+    }
+    
+    function goHome() {
+      window.location.href = 'index.html';
+    }
+  </script>
+</body>
+</html>

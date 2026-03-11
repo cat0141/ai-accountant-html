@@ -1,0 +1,86 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>导入记录 - AI 会计师</title>
+  <link rel="stylesheet" href="css/ai-accountant.css">
+</head>
+<body>
+  <!-- 顶部导航栏 -->
+  <div class="header">
+    <div class="header-nav">
+      <button class="header-btn" onclick="goBack()">←</button>
+      <div class="header-title">导入记录</div>
+      <div style="width: 24px;"></div>
+    </div>
+  </div>
+  
+  <!-- 搜索框 -->
+  <div class="search-box">
+    <input type="text" class="search-input" placeholder="搜索文件名...">
+    <button class="search-btn">搜索</button>
+  </div>
+  
+  <!-- 导入记录列表 -->
+  <div class="list-card">
+    <div class="list-info">
+      <div class="list-title">📄 宝贝报表 20260310.xlsx</div>
+      <div class="list-desc">2026-03-11 19:10 · 156 单 · ¥12,456.00</div>
+    </div>
+    <div class="list-status list-status-success">✅ 成功</div>
+  </div>
+  
+  <div class="list-card">
+    <div class="list-info">
+      <div class="list-title">📄 订单报表 20260228.xlsx</div>
+      <div class="list-desc">2026-02-28 14:30 · 89 单 · ¥8,234.00</div>
+    </div>
+    <div class="list-status list-status-success">✅ 成功</div>
+  </div>
+  
+  <div class="list-card">
+    <div class="list-info">
+      <div class="list-title">📄 订单 20260215.csv</div>
+      <div class="list-desc">2026-02-15 09:15 · 45 单 · ¥3,456.00</div>
+    </div>
+    <div class="list-status list-status-error">❌ 失败</div>
+  </div>
+  
+  <div class="list-card">
+    <div class="list-info">
+      <div class="list-title">📄 淘宝订单 20260131.xlsx</div>
+      <div class="list-desc">2026-01-31 16:45 · 234 单 · ¥18,567.00</div>
+    </div>
+    <div class="list-status list-status-success">✅ 成功</div>
+  </div>
+  
+  <div class="list-card">
+    <div class="list-info">
+      <div class="list-title">📄 京东订单 20260115.xlsx</div>
+      <div class="list-desc">2026-01-15 10:20 · 67 单 · ¥5,678.00</div>
+    </div>
+    <div class="list-status list-status-success">✅ 成功</div>
+  </div>
+  
+  <!-- 空状态（如果列表为空时显示） -->
+  <!--
+  <div class="empty-state">
+    <div class="empty-icon">📋</div>
+    <div class="empty-title">暂无导入记录</div>
+    <div class="empty-desc">上传第一个订单文件开始使用</div>
+    <button class="action-btn action-btn-primary" onclick="goUpload()">去上传</button>
+  </div>
+  -->
+  
+  <script>
+    function goBack() {
+      window.location.href = 'index.html';
+    }
+    
+    function goUpload() {
+      window.location.href = 'index.html';
+    }
+  </script>
+</body>
+</html>

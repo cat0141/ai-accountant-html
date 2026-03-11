@@ -1,0 +1,128 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>订单列表 - AI 会计师</title>
+  <link rel="stylesheet" href="css/ai-accountant.css">
+</head>
+<body>
+  <!-- 顶部导航栏 -->
+  <div class="header">
+    <div class="header-nav">
+      <button class="header-btn">☰</button>
+      <div class="header-title">订单列表</div>
+      <button class="header-btn">⟳</button>
+    </div>
+  </div>
+  
+  <!-- 筛选栏 -->
+  <div style="background: var(--white); padding: var(--spacing-md); margin-bottom: var(--spacing-md);">
+    <div style="display: flex; gap: var(--spacing-xs); margin-bottom: var(--spacing-sm); overflow-x: auto;">
+      <button style="flex: 0 0 auto; padding: 6px 12px; background: var(--primary-gradient); color: white; border: none; border-radius: 16px; font-size: 12px; font-weight: 600;">全部</button>
+      <button style="flex: 0 0 auto; padding: 6px 12px; background: var(--background-purple); color: var(--primary-purple); border: 1px solid var(--primary-purple); border-radius: 16px; font-size: 12px; font-weight: 600;">待付款</button>
+      <button style="flex: 0 0 auto; padding: 6px 12px; background: var(--background-purple); color: var(--primary-purple); border: 1px solid var(--primary-purple); border-radius: 16px; font-size: 12px; font-weight: 600;">待发货</button>
+      <button style="flex: 0 0 auto; padding: 6px 12px; background: var(--background-purple); color: var(--primary-purple); border: 1px solid var(--primary-purple); border-radius: 16px; font-size: 12px; font-weight: 600;">待收货</button>
+    </div>
+    <div style="display: flex; gap: var(--spacing-xs); overflow-x: auto;">
+      <button style="flex: 0 0 auto; padding: 6px 12px; background: var(--background-purple); color: var(--primary-purple); border: 1px solid var(--primary-purple); border-radius: 16px; font-size: 12px; font-weight: 600;">已完成</button>
+      <button style="flex: 0 0 auto; padding: 6px 12px; background: var(--background-purple); color: var(--primary-purple); border: 1px solid var(--primary-purple); border-radius: 16px; font-size: 12px; font-weight: 600;">已退款</button>
+    </div>
+    <div style="display: flex; gap: var(--spacing-xs); margin-top: var(--spacing-sm);">
+      <input type="text" placeholder="搜索订单号/商品名称" style="flex: 1; padding: 8px 12px; border: 1px solid var(--border-gray); border-radius: 6px; font-size: 14px;">
+      <button style="padding: 8px 16px; background: var(--primary-gradient); color: white; border: none; border-radius: 6px; font-size: 14px; font-weight: 600;">搜索</button>
+    </div>
+  </div>
+  
+  <!-- 统计栏 -->
+  <div style="background: var(--white); padding: var(--spacing-md); margin: 0 var(--spacing-md) var(--spacing-md); display: flex; justify-content: space-around; border-radius: var(--radius-lg); box-shadow: var(--shadow-sm);">
+    <div style="text-align: center;">
+      <div style="font-size: 20px; font-weight: bold; color: var(--primary-purple);">156</div>
+      <div style="font-size: 12px; color: var(--text-light); margin-top: 4px;">全部订单</div>
+    </div>
+    <div style="text-align: center;">
+      <div style="font-size: 20px; font-weight: bold; color: var(--warning-orange);">23</div>
+      <div style="font-size: 12px; color: var(--text-light); margin-top: 4px;">待处理</div>
+    </div>
+    <div style="text-align: center;">
+      <div style="font-size: 20px; font-weight: bold; color: var(--success-green);">128</div>
+      <div style="font-size: 12px; color: var(--text-light); margin-top: 4px;">已完成</div>
+    </div>
+    <div style="text-align: center;">
+      <div style="font-size: 20px; font-weight: bold; color: var(--error-red);">5</div>
+      <div style="font-size: 12px; color: var(--text-light); margin-top: 4px;">已退款</div>
+    </div>
+  </div>
+  
+  <!-- 订单列表 -->
+  <div class="order-card">
+    <div class="order-header">
+      <div style="display: flex; align-items: center; gap: var(--spacing-xs);">
+        <div style="width: 20px; height: 20px; border: 2px solid var(--primary-purple); border-radius: 4px; background: var(--primary-purple); color: white; display: flex; align-items: center; justify-content: center; font-size: 12px;">✓</div>
+        <div class="order-shop">十角兽旗舰店</div>
+      </div>
+      <div class="order-status order-status-completed">交易成功</div>
+    </div>
+    
+    <div style="display: flex; gap: var(--spacing-md); margin-bottom: var(--spacing-sm);">
+      <div style="width: 60px; height: 60px; background: var(--background-purple); border-radius: var(--radius-sm); display: flex; align-items: center; justify-content: center; font-size: 24px; flex-shrink: 0;">📦</div>
+      <div style="flex: 1;">
+        <div style="font-size: 14px; color: var(--text-dark); margin-bottom: 6px; line-height: 1.4;">可爱解压笔捏捏乐中性笔学习用品卡通小学生文具</div>
+        <div style="font-size: 12px; color: var(--text-light); margin-bottom: 6px;">颜色：图案随机;规格：0.5mm</div>
+        <div style="display: flex; justify-content: space-between; align-items: center;">
+          <div style="font-size: 14px; color: var(--primary-purple); font-weight: 600;">¥3.00</div>
+          <div style="font-size: 12px; color: var(--text-light);">x1</div>
+        </div>
+      </div>
+    </div>
+    
+    <div style="display: flex; justify-content: space-between; align-items: center; padding-top: var(--spacing-sm); border-top: 1px solid var(--border-gray);">
+      <div style="font-size: 12px; color: var(--text-light);">2025-11-19 10:32</div>
+      <div style="font-size: 14px; color: var(--text-dark);">实付：<span style="color: var(--primary-purple); font-size: 16px; font-weight: bold;">¥3.00</span></div>
+    </div>
+  </div>
+  
+  <div class="order-card">
+    <div class="order-header">
+      <div style="display: flex; align-items: center; gap: var(--spacing-xs);">
+        <div style="width: 20px; height: 20px; border: 2px solid var(--primary-purple); border-radius: 4px; display: flex; align-items: center; justify-content: center; font-size: 12px;"></div>
+        <div class="order-shop">文具专营店</div>
+      </div>
+      <div class="order-status order-status-completed">交易成功</div>
+    </div>
+    
+    <div style="display: flex; gap: var(--spacing-md); margin-bottom: var(--spacing-sm);">
+      <div style="width: 60px; height: 60px; background: var(--background-purple); border-radius: var(--radius-sm); display: flex; align-items: center; justify-content: center; font-size: 24px; flex-shrink: 0;">📔</div>
+      <div style="flex: 1;">
+        <div style="font-size: 14px; color: var(--text-dark); margin-bottom: 6px; line-height: 1.4;">笔记本 A5 记事本加厚大学生用</div>
+        <div style="font-size: 12px; color: var(--text-light); margin-bottom: 6px;">颜色：黑色;规格：A5/80 页</div>
+        <div style="display: flex; justify-content: space-between; align-items: center;">
+          <div style="font-size: 14px; color: var(--primary-purple); font-weight: 600;">¥15.80</div>
+          <div style="font-size: 12px; color: var(--text-light);">x2</div>
+        </div>
+      </div>
+    </div>
+    
+    <div style="display: flex; justify-content: space-between; align-items: center; padding-top: var(--spacing-sm); border-top: 1px solid var(--border-gray);">
+      <div style="font-size: 12px; color: var(--text-light);">2025-11-18 15:20</div>
+      <div style="font-size: 14px; color: var(--text-dark);">实付：<span style="color: var(--primary-purple); font-size: 16px; font-weight: bold;">¥31.60</span></div>
+    </div>
+  </div>
+  
+  <!-- 底部固定操作栏 -->
+  <div class="bottom-bar">
+    <button class="action-btn action-btn-secondary" onclick="selectAll()">全选</button>
+    <button class="action-btn action-btn-primary" onclick="generateIncome()">生成无票收入 (1)</button>
+  </div>
+  
+  <script>
+    function selectAll() {
+      alert('全选功能');
+    }
+    
+    function generateIncome() {
+      alert('生成无票收入功能');
+    }
+  </script>
+</body>
+</html>

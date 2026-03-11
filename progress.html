@@ -1,0 +1,87 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>文件解析中 - AI 会计师</title>
+  <link rel="stylesheet" href="css/ai-accountant.css">
+</head>
+<body>
+  <!-- 顶部导航栏 -->
+  <div class="header">
+    <div class="header-nav">
+      <button class="header-btn" onclick="goBack()">←</button>
+      <div class="header-title">订单导入</div>
+      <div style="width: 24px;"></div>
+    </div>
+  </div>
+  
+  <!-- 解析进度卡片 -->
+  <div class="progress-card">
+    <div class="progress-icon">⏳</div>
+    <div class="progress-title">正在解析文件...</div>
+    
+    <div class="progress-info">
+      <div class="progress-item">
+        <span>文件名：</span>
+        <span>宝贝报表 20260310.xlsx</span>
+      </div>
+      <div class="progress-item">
+        <span>文件大小：</span>
+        <span>2.3 MB</span>
+      </div>
+      <div class="progress-item">
+        <span>解析进度：</span>
+        <span id="progress-percent">65%</span>
+      </div>
+    </div>
+    
+    <div class="progress-bar">
+      <div class="progress-fill" id="progress-fill" style="width: 65%;"></div>
+    </div>
+    
+    <div class="progress-time">
+      预计剩余时间：<span id="remaining-time">15</span> 秒
+    </div>
+    
+    <div class="progress-tips">
+      <div class="progress-tips-title">💡 解析完成后将显示：</div>
+      <ul class="progress-tips-list">
+        <li>订单总数</li>
+        <li>商品明细</li>
+        <li>金额汇总</li>
+        <li>已开票/未开票区分</li>
+      </ul>
+    </div>
+  </div>
+  
+  <script>
+    // 模拟进度条动画
+    let progress = 65;
+    const progressFill = document.getElementById('progress-fill');
+    const progressPercent = document.getElementById('progress-percent');
+    const remainingTime = document.getElementById('remaining-time');
+    
+    const timer = setInterval(() => {
+      progress += Math.random() * 5;
+      if (progress >= 100) {
+        progress = 100;
+        clearInterval(timer);
+        setTimeout(() => {
+          window.location.href = 'data-confirm.html';
+        }, 500);
+      }
+      
+      progressFill.style.width = progress + '%';
+      progressPercent.textContent = Math.floor(progress) + '%';
+      remainingTime.textContent = Math.max(0, Math.floor((100 - progress) / 5));
+    }, 500);
+    
+    function goBack() {
+      if (confirm('确定要取消解析吗？')) {
+        window.location.href = 'index.html';
+      }
+    }
+  </script>
+</body>
+</html>

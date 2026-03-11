@@ -1,0 +1,544 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+  <title>订单列表 - AI 会计师</title>
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+    
+    body {
+      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+      background: #f5f5f5;
+      padding-bottom: 70px;
+    }
+    
+    /* 顶部导航栏 */
+    .header {
+      background: #E1251B;
+      color: white;
+      padding: 15px 20px;
+      position: sticky;
+      top: 0;
+      z-index: 100;
+      box-shadow: 0 2px 8px rgba(225, 37, 27, 0.3);
+    }
+    
+    .header h1 {
+      font-size: 18px;
+      font-weight: 600;
+      text-align: center;
+    }
+    
+    /* 筛选栏 */
+    .filter-bar {
+      background: white;
+      padding: 15px 20px;
+      margin-bottom: 10px;
+      border-bottom: 1px solid #eee;
+    }
+    
+    .filter-row {
+      display: flex;
+      gap: 10px;
+      margin-bottom: 10px;
+    }
+    
+    .filter-row:last-child {
+      margin-bottom: 0;
+    }
+    
+    .filter-btn {
+      flex: 1;
+      padding: 8px 12px;
+      background: #f5f5f5;
+      border: 1px solid #ddd;
+      border-radius: 6px;
+      font-size: 13px;
+      color: #333;
+      text-align: center;
+    }
+    
+    .filter-btn.active {
+      background: #E1251B;
+      color: white;
+      border-color: #E1251B;
+    }
+    
+    .search-box {
+      display: flex;
+      gap: 10px;
+    }
+    
+    .search-input {
+      flex: 1;
+      padding: 8px 12px;
+      border: 1px solid #ddd;
+      border-radius: 6px;
+      font-size: 14px;
+    }
+    
+    .search-btn {
+      padding: 8px 16px;
+      background: #E1251B;
+      color: white;
+      border: none;
+      border-radius: 6px;
+      font-size: 14px;
+    }
+    
+    /* 统计栏 */
+    .stats-bar {
+      background: white;
+      padding: 15px 20px;
+      margin-bottom: 10px;
+      display: flex;
+      justify-content: space-around;
+      border-bottom: 1px solid #eee;
+    }
+    
+    .stat-item {
+      text-align: center;
+    }
+    
+    .stat-number {
+      font-size: 20px;
+      font-weight: bold;
+      color: #E1251B;
+    }
+    
+    .stat-label {
+      font-size: 12px;
+      color: #999;
+      margin-top: 4px;
+    }
+    
+    /* 订单列表 */
+    .order-list {
+      padding: 0 15px;
+    }
+    
+    .order-card {
+      background: white;
+      border-radius: 12px;
+      padding: 15px;
+      margin-bottom: 12px;
+      box-shadow: 0 2px 8px rgba(0, 0, 0, 0.05);
+    }
+    
+    .order-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 12px;
+      padding-bottom: 12px;
+      border-bottom: 1px solid #f0f0f0;
+    }
+    
+    .order-shop {
+      font-size: 14px;
+      font-weight: 600;
+      color: #333;
+    }
+    
+    .order-status {
+      font-size: 12px;
+      padding: 4px 10px;
+      border-radius: 12px;
+      font-weight: 500;
+    }
+    
+    .status-paid {
+      background: #fff3e0;
+      color: #ff9800;
+    }
+    
+    .status-shipped {
+      background: #e3f2fd;
+      color: #2196f3;
+    }
+    
+    .status-completed {
+      background: #e8f5e9;
+      color: #4caf50;
+    }
+    
+    .status-refunded {
+      background: #ffebee;
+      color: #f44336;
+    }
+    
+    .order-products {
+      margin-bottom: 12px;
+    }
+    
+    .product-item {
+      display: flex;
+      gap: 12px;
+      margin-bottom: 10px;
+    }
+    
+    .product-item:last-child {
+      margin-bottom: 0;
+    }
+    
+    .product-image {
+      width: 60px;
+      height: 60px;
+      background: #f5f5f5;
+      border-radius: 6px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 20px;
+    }
+    
+    .product-info {
+      flex: 1;
+    }
+    
+    .product-name {
+      font-size: 14px;
+      color: #333;
+      margin-bottom: 6px;
+      line-height: 1.4;
+    }
+    
+    .product-spec {
+      font-size: 12px;
+      color: #999;
+      margin-bottom: 6px;
+    }
+    
+    .product-price-row {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+    
+    .product-price {
+      font-size: 14px;
+      color: #E1251B;
+      font-weight: 600;
+    }
+    
+    .product-quantity {
+      font-size: 12px;
+      color: #999;
+    }
+    
+    .order-footer {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding-top: 12px;
+      border-top: 1px solid #f0f0f0;
+    }
+    
+    .order-time {
+      font-size: 12px;
+      color: #999;
+    }
+    
+    .order-total {
+      font-size: 14px;
+      color: #333;
+    }
+    
+    .order-total strong {
+      color: #E1251B;
+      font-size: 16px;
+    }
+    
+    /* 底部操作栏 */
+    .bottom-bar {
+      position: fixed;
+      bottom: 0;
+      left: 0;
+      right: 0;
+      background: white;
+      padding: 12px 20px;
+      box-shadow: 0 -2px 8px rgba(0, 0, 0, 0.1);
+      display: flex;
+      gap: 12px;
+    }
+    
+    .action-btn {
+      flex: 1;
+      padding: 12px;
+      border: none;
+      border-radius: 8px;
+      font-size: 14px;
+      font-weight: 600;
+    }
+    
+    .btn-secondary {
+      background: #f5f5f5;
+      color: #333;
+    }
+    
+    .btn-primary {
+      background: #E1251B;
+      color: white;
+    }
+    
+    /* 勾选框 */
+    .checkbox {
+      width: 20px;
+      height: 20px;
+      border: 2px solid #ddd;
+      border-radius: 4px;
+      margin-right: 10px;
+      position: relative;
+    }
+    
+    .checkbox.checked {
+      background: #E1251B;
+      border-color: #E1251B;
+    }
+    
+    .checkbox.checked::after {
+      content: '✓';
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+      color: white;
+      font-size: 12px;
+    }
+    
+    .order-card.selected .checkbox {
+      background: #E1251B;
+      border-color: #E1251B;
+    }
+  </style>
+</head>
+<body>
+  <!-- 顶部导航栏 -->
+  <div class="header">
+    <h1>订单列表</h1>
+  </div>
+  
+  <!-- 筛选栏 -->
+  <div class="filter-bar">
+    <div class="filter-row">
+      <div class="filter-btn active">全部</div>
+      <div class="filter-btn">待付款</div>
+      <div class="filter-btn">待发货</div>
+      <div class="filter-btn">待收货</div>
+    </div>
+    <div class="filter-row">
+      <div class="filter-btn">已完成</div>
+      <div class="filter-btn">已退款</div>
+    </div>
+    <div class="search-box">
+      <input type="text" class="search-input" placeholder="搜索订单号/商品名称">
+      <button class="search-btn">搜索</button>
+    </div>
+  </div>
+  
+  <!-- 统计栏 -->
+  <div class="stats-bar">
+    <div class="stat-item">
+      <div class="stat-number">156</div>
+      <div class="stat-label">全部订单</div>
+    </div>
+    <div class="stat-item">
+      <div class="stat-number">23</div>
+      <div class="stat-label">待处理</div>
+    </div>
+    <div class="stat-item">
+      <div class="stat-number">128</div>
+      <div class="stat-label">已完成</div>
+    </div>
+    <div class="stat-item">
+      <div class="stat-number">5</div>
+      <div class="stat-label">已退款</div>
+    </div>
+  </div>
+  
+  <!-- 订单列表 -->
+  <div class="order-list">
+    <!-- 订单卡片 1 -->
+    <div class="order-card selected">
+      <div class="order-header">
+        <div style="display: flex; align-items: center;">
+          <div class="checkbox checked"></div>
+          <div class="order-shop">十角兽旗舰店</div>
+        </div>
+        <div class="order-status status-completed">交易成功</div>
+      </div>
+      
+      <div class="order-products">
+        <div class="product-item">
+          <div class="product-image">📦</div>
+          <div class="product-info">
+            <div class="product-name">可爱解压笔捏捏乐中性笔学习用品卡通小学生文具</div>
+            <div class="product-spec">颜色：图案随机;规格：0.5mm</div>
+            <div class="product-price-row">
+              <div class="product-price">¥3.00</div>
+              <div class="product-quantity">x1</div>
+            </div>
+          </div>
+        </div>
+      </div>
+      
+      <div class="order-footer">
+        <div class="order-time">2025-11-19 10:32</div>
+        <div class="order-total">实付：<strong>¥3.00</strong></div>
+      </div>
+    </div>
+    
+    <!-- 订单卡片 2 -->
+    <div class="order-card">
+      <div class="order-header">
+        <div style="display: flex; align-items: center;">
+          <div class="checkbox"></div>
+          <div class="order-shop">文具专营店</div>
+        </div>
+        <div class="order-status status-completed">交易成功</div>
+      </div>
+      
+      <div class="order-products">
+        <div class="product-item">
+          <div class="product-image">📔</div>
+          <div class="product-info">
+            <div class="product-name">笔记本 A5 记事本加厚大学生用</div>
+            <div class="product-spec">颜色：黑色;规格：A5/80 页</div>
+            <div class="product-price-row">
+              <div class="product-price">¥15.80</div>
+              <div class="product-quantity">x2</div>
+            </div>
+          </div>
+        </div>
+      </div>
+      
+      <div class="order-footer">
+        <div class="order-time">2025-11-18 15:20</div>
+        <div class="order-total">实付：<strong>¥31.60</strong></div>
+      </div>
+    </div>
+    
+    <!-- 订单卡片 3 -->
+    <div class="order-card">
+      <div class="order-header">
+        <div style="display: flex; align-items: center;">
+          <div class="checkbox"></div>
+          <div class="order-shop">办公用品直营店</div>
+        </div>
+        <div class="order-status status-shipped">已发货</div>
+      </div>
+      
+      <div class="order-products">
+        <div class="product-item">
+          <div class="product-image">📎</div>
+          <div class="product-info">
+            <div class="product-name">文件夹 A4 资料册多层收纳</div>
+            <div class="product-spec">颜色：蓝色;规格：A4/10 层</div>
+            <div class="product-price-row">
+              <div class="product-price">¥28.00</div>
+              <div class="product-quantity">x1</div>
+            </div>
+          </div>
+        </div>
+      </div>
+      
+      <div class="order-footer">
+        <div class="order-time">2025-11-17 09:15</div>
+        <div class="order-total">实付：<strong>¥28.00</strong></div>
+      </div>
+    </div>
+    
+    <!-- 订单卡片 4 -->
+    <div class="order-card">
+      <div class="order-header">
+        <div style="display: flex; align-items: center;">
+          <div class="checkbox"></div>
+          <div class="order-shop">数码配件店</div>
+        </div>
+        <div class="order-status status-paid">待发货</div>
+      </div>
+      
+      <div class="order-products">
+        <div class="product-item">
+          <div class="product-image">🔌</div>
+          <div class="product-info">
+            <div class="product-name">USB 数据线 Type-C 快充线</div>
+            <div class="product-spec">颜色：白色;规格：1 米</div>
+            <div class="product-price-row">
+              <div class="product-price">¥9.90</div>
+              <div class="product-quantity">x3</div>
+            </div>
+          </div>
+        </div>
+      </div>
+      
+      <div class="order-footer">
+        <div class="order-time">2025-11-16 20:45</div>
+        <div class="order-total">实付：<strong>¥29.70</strong></div>
+      </div>
+    </div>
+  </div>
+  
+  <!-- 底部操作栏 -->
+  <div class="bottom-bar">
+    <button class="action-btn btn-secondary" onclick="selectAll()">全选</button>
+    <button class="action-btn btn-primary" onclick="generateIncome()">生成无票收入 (1)</button>
+  </div>
+  
+  <script>
+    // 全选功能
+    function selectAll() {
+      const cards = document.querySelectorAll('.order-card');
+      const checkboxes = document.querySelectorAll('.checkbox');
+      const allChecked = Array.from(checkboxes).every(cb => cb.classList.contains('checked'));
+      
+      cards.forEach((card, index) => {
+        if (allChecked) {
+          card.classList.remove('selected');
+          checkboxes[index].classList.remove('checked');
+        } else {
+          card.classList.add('selected');
+          checkboxes[index].classList.add('checked');
+        }
+      });
+      
+      updateCount();
+    }
+    
+    // 生成无票收入
+    function generateIncome() {
+      const selectedCount = document.querySelectorAll('.order-card.selected').length;
+      if (selectedCount === 0) {
+        alert('请先选择订单');
+        return;
+      }
+      alert(`已选择 ${selectedCount} 个订单，准备生成无票收入...`);
+    }
+    
+    // 更新计数
+    function updateCount() {
+      const count = document.querySelectorAll('.order-card.selected').length;
+      const btn = document.querySelector('.btn-primary');
+      btn.textContent = `生成无票收入 (${count})`;
+    }
+    
+    // 点击订单卡片勾选
+    document.querySelectorAll('.order-card').forEach(card => {
+      card.addEventListener('click', function(e) {
+        if (!e.target.classList.contains('filter-btn') && 
+            !e.target.classList.contains('search-btn')) {
+          this.classList.toggle('selected');
+          const checkbox = this.querySelector('.checkbox');
+          checkbox.classList.toggle('checked');
+          updateCount();
+        }
+      });
+    });
+  </script>
+</body>
+</html>
